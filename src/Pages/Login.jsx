@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 
 const Login = () => {
-  const {loginUser,googleLogin,setUser} = useContext(AuthContext)
+  const {loginUser,googleLogin,setUser,user} = useContext(AuthContext)
+  const location = useLocation();
+  const navigate = useNavigate();
  
     const handleLogin = (e) =>{
         e.preventDefault();
@@ -19,6 +21,13 @@ const Login = () => {
         setUser(result.user)
       })
     }
+
+    useEffect(()=>{
+      if(user){
+        navigate(location.state)
+      }
+    },[user])
+    
     return (
 <div className="hero min-h-screen bg-base-200">
   <div className="hero-content flex-col lg:flex-row-reverse">
